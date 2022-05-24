@@ -1,45 +1,37 @@
 # Binance Trading Bot
 
-[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://war.ukraine.ua)
-
-
 [![GitHub version](https://img.shields.io/github/package-json/v/chrisleekr/binance-trading-bot)](https://github.com/chrisleekr/binance-trading-bot/releases)
-[![Build](https://github.com/chrisleekr/binance-trading-bot/workflows/Push/badge.svg)](https://github.com/chrisleekr/binance-trading-bot/actions?query=workflow%3APush)
+[![Build](https://github.com/chrisleekr/binance-trading-bot/workflows/main/badge.svg)](https://github.com/chrisleekr/binance-trading-bot/actions?query=workflow%3Amain)
 [![CodeCov](https://codecov.io/gh/chrisleekr/binance-trading-bot/branch/master/graph/badge.svg)](https://codecov.io/gh/chrisleekr/binance-trading-bot)
 [![Docker pull](https://img.shields.io/docker/pulls/chrisleekr/binance-trading-bot)](https://hub.docker.com/r/chrisleekr/binance-trading-bot)
 [![GitHub contributors](https://img.shields.io/github/contributors/chrisleekr/binance-trading-bot)](https://github.com/chrisleekr/binance-trading-bot/graphs/contributors)
 [![MIT License](https://img.shields.io/github/license/chrisleekr/binance-trading-bot)](https://github.com/chrisleekr/binance-trading-bot/blob/master/LICENSE)
 
-> Automated Binance trading bot with trailing buy/sell strategy
+> 币安跟踪委托单高买低卖策略交易机器人
 
 ---
 
+[![en](https://img.shields.io/badge/lang-English-blue.svg)](https://github.com/chrisleekr/binance-trading-bot/blob/master/README.md)
 [![ko](https://img.shields.io/badge/lang-한국어-brightgreen.svg)](https://github.com/chrisleekr/binance-trading-bot/blob/master/README.ko.md)
-[![中文](https://img.shields.io/badge/lang-中文-blue.svg)](https://github.com/chrisleekr/binance-trading-bot/blob/master/README.zh-cn.md)
 
-This is a test project. I am just testing my code.
+这只是一个测试项目，代码正在测试中。
 
-## Warnings
+## 警告
 
-**I cannot guarantee whether you can make money or not.**
+**我不能保证你能通过这个项目来挣钱**
+**所以，使用这个项目的风险由你自己承担，我对使用此代码直接或间接引起的任何损失不承担任何责任。在使用本项目前请先阅读[免责协议](#免责协议)**。
+**在更新机器人之前，请确保记录最后的买入价格。更新后可能会丢失配置或最后的买入价格记录。**
 
-**So use it at your own risk! I have no responsibility for any loss or hardship
-incurred directly or indirectly by using this code. Read
-[disclaimer](#disclaimer) before using this code.**
+## 工作原理
 
-**Before updating the bot, make sure to record the last buy price in the note. It may lose the configuration or last buy price records.**
+### 跟踪委托买入/卖出机器人
 
-## How it works
+这个机器人使用跟踪买入/卖出订单的概念，跟踪价格的下跌/上涨。
 
-### Trailing Grid Trade Buy/Sell Bot
-
-This bot is using the concept of trailing buy/sell order which allows following the price fall/rise.
-
-> Trailing Stop Orders
-> About Trailing Stop Orders Concept you can find at [Binance Official document](https://www.binance.com/en/support/faq/360042299292)
+> 跟踪委托单
+> 关于跟踪委托的信息可以看币安的[官方文档](https://www.binance.com/zh-CN/support/faq/360042299292)
 >
-> TL;DR
-> Place orders at a fixed value or percentage when the price changes. Using this feature you can buy at the lowest possible price when buying down and sell at the highest possible price when selling up.
+> 简单来说就是在价格变化时，按固定的数值或百分比进行委托。利用这个特性可以在下跌买入时买到尽可能低的价格，在上涨卖出时卖出最高的价格。
 
 - The bot supports multiple buy/sell orders based on the configuration.
 - The bot can monitor multiple symbols. All symbols will be monitored per second.
@@ -47,7 +39,7 @@ This bot is using the concept of trailing buy/sell order which allows following 
   is 3.2.20, which is provided by [apcheamitru](https://hub.docker.com/r/apcheamitru/arm32v7-mongo).
 - The bot is tested/working with Linux and Raspberry Pi 4 32bit. Other platforms are not tested.
 
-#### Buy Signal
+#### 买入信号（Buy Signal）
 
 The bot will continuously monitor the coin based on the grid trade configuration.
 
@@ -58,7 +50,7 @@ After grid trade #1, the bot will monitor the COIN based on the last buy price.
 - The bot will not place a buy order of the grid trade #1 if has enough coin (typically over $10 worth) to sell when reaches the trigger price for selling.
 - The bot will remove the last buy price if the estimated value is less than the last buy price removal threshold.
 
-##### Buy Scenario
+##### 买入方案
 
 Let say, if the buy grid trade configurations are set as below:
 
@@ -144,7 +136,7 @@ The detailed document for buy configuration available here.
 
 [https://github.com/chrisleekr/binance-trading-bot/wiki/Buy-Scenario](https://github.com/chrisleekr/binance-trading-bot/wiki/Buy-Scenario)
 
-### Sell Signal
+### 卖出信号
 
 If there is enough balance for selling and the last buy price is recorded in the bot, then the bot will start monitoring the sell signal of the grid trade #1. Once the current price reaches the trigger price of the grid trade #1, then the bot will place a STOP-LOSS-LIMIT order to sell. If the current price continuously rises, then the bot will cancel the previous order and re-place the new STOP-LOSS-LIMIT order with the new price.
 
@@ -152,7 +144,7 @@ If there is enough balance for selling and the last buy price is recorded in the
 - If the coin is worth less than the last buy price removal threshold, then the bot will remove the last buy price.
 - If the coin is not worth than the minimum notional value, then the bot will not place an order.
 
-#### Sell Scenario
+#### 卖出方案
 
 Let say, if the sell grid trade configurations are set as below:
 
@@ -245,39 +237,37 @@ The detailed document for buy configuration available here.
 
 [https://github.com/chrisleekr/binance-trading-bot/wiki/Sell-Scenario](https://github.com/chrisleekr/binance-trading-bot/wiki/Sell-Scenario)
 
-### [Features](https://github.com/chrisleekr/binance-trading-bot/wiki/Features)
+### [功能](https://github.com/chrisleekr/binance-trading-bot/wiki/Features)
 
-- Manual trade
-- Convert small balances to BNB
-- Trade all symbols
-- Monitoring multiple coins simultaneously
-- Stop-Loss
-- Restrict buying with ATH price
-- Grid Trade for buy/sell
+- 手动交易
+- 小资产转BNB
+- 交易所有硬币
+- 同时监控多个硬币
+- 止损
+- 限制最高价格的购买次数
 - Integrated with TradingView Technical Analysis
 
-### Frontend + WebSocket
+### 前端 + WebSocket
 
-React.js based frontend communicating via Web Socket:
+基于 React.js 的前端，通过 Web Socket 通信:
 
 - List monitoring coins with buy/sell signals/open orders
 - View account balances
-- View open/closed trades
 - Manage global/symbol settings
 - Delete caches that are not monitored
 - Link to public URL
 - Support Add to Home Screen
 - Secure frontend
 
-## Environment Parameters
+## 环境变量
 
-Use environment parameters to adjust parameters. Check `/config/custom-environment-variables.json` to see list of available environment parameters.
+通过环境变量调整参数. 参考`/config/custom-environment-variables.json` 查看所有的环境变量.
 
-Or use the frontend to adjust configurations after launching the application.
+或者在应用启动后调整参数。
 
-## How to use
+## 使用方法
 
-1. Create `.env` file based on `.env.dist`.
+1. 基于 `.env.dist`创建 `.env` 文件
 
    | Environment Key                | Description                                                               | Sample Value                                                                                        |
    | ------------------------------ | ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
@@ -293,12 +283,13 @@ Or use the frontend to adjust configurations after launching the application.
    | BINANCE_LOCAL_TUNNEL_SUBDOMAIN | Local tunnel public URL subdomain                                         | binance                                                                                             |
    | BINANCE_AUTHENTICATION_ENABLED | Enable/Disable frontend authentication                                    | true  |
    | BINANCE_AUTHENTICATION_PASSWORD | Frontend password                                                        | 123456 |
-   | BINANCE_LOG_LEVEL               | Logging level. [Possible values described on `bunyan` docs.](https://www.npmjs.com/package/bunyan#levels) | ERROR |
 
-   *A local tunnel makes the bot accessible from the outside. Please set the subdomain of the local tunnel as a subdomain that only you can remember.*
-   *You must change the authentication password; otherwise, it will be configured as the default password.*
+   *本地隧道使机器人可以从外部访问。 请将本地隧道的子域设置为只有您能记住的子域。*
+  *You must change the authentication password; otherwise, it will be configured as the default password.*
 
-2. Launch/Update the bot with docker-compose
+2. Check `docker-compose.yml` for `BINANCE_MODE` environment parameter
+
+3. Launch/Update the bot with docker-compose
 
    Pull latest code first:
 
@@ -306,23 +297,25 @@ Or use the frontend to adjust configurations after launching the application.
    git pull
    ```
 
-   If want production/live mode, then use the latest build image from DockerHub:
+   If want production mode, then use the latest build image from DockerHub:
 
    ```bash
    docker-compose -f docker-compose.server.yml pull
    docker-compose -f docker-compose.server.yml up -d
    ```
 
-   Or if want development/test mode, then run below commands:
+   Or if want development mode, then run below commands:
 
    ```bash
-   docker-compose up -d --build
+   docker-compose up -d
    ```
 
-3. Open browser `http://0.0.0.0:8080` to see the frontend
+4. Open browser `http://0.0.0.0:8080` to see the frontend
 
    - When launching the application, it will notify public URL to the Slack.
-   - If you have any issue with the bot, you can check the log to find out what happened with the bot. Please take a look [Troubleshooting](https://github.com/chrisleekr/binance-trading-bot/wiki/Troubleshooting)
+   - If you have any issue with the bot, you can check the log to find out what
+     happened with the bot. Please take a look
+     [Troubleshooting](https://github.com/chrisleekr/binance-trading-bot/wiki/Troubleshooting)
 
 ### Install via Stackfile
 
@@ -334,7 +327,7 @@ Or use the frontend to adjust configurations after launching the application.
 
 4. Launch and open browser `http://0.0.0.0:8080` to see the frontend
 
-## Screenshots
+## 截图
 
 | Password Protected | Frontend Mobile |
 | ------------------ | --------------- |
@@ -350,45 +343,16 @@ Or use the frontend to adjust configurations after launching the application.
 
 ### Sample Trade
 
-| Chart                                                                                                          | Buy Orders                                                                                                          | Sell Orders                                                                                                          |
+| 图表                                                                                                          | 买单                                                                                                          | 卖单                                                                                                          |
 | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | ![Chart](https://user-images.githubusercontent.com/5715919/111027391-192db300-8444-11eb-8df4-91c98d0c835b.png) | ![Buy Orders](https://user-images.githubusercontent.com/5715919/111027403-36628180-8444-11eb-91dc-f3cdabc5a79e.png) | ![Sell Orders](https://user-images.githubusercontent.com/5715919/111027411-4b3f1500-8444-11eb-8525-37f02a63de25.png) |
 
-## Changes & Todo
-
-Please refer
-[CHANGELOG.md](https://github.com/chrisleekr/binance-trading-bot/blob/master/CHANGELOG.md)
-to view the past changes.
-
-- [ ] Develop simple setup screen for secrets
-- [ ] Allow to execute stop-loss before buy action - [#299](https://github.com/chrisleekr/binance-trading-bot/issues/299)
-- [ ] Improve sell strategy with conditional stop price percentage based on the profit percentage - [#94](https://github.com/chrisleekr/binance-trading-bot/issues/94)
-- [ ] Add sudden drop buy strategy - [#67](https://github.com/chrisleekr/binance-trading-bot/issues/67)
-- [ ] Manage setting profiles (save/change/load?/export?) - [#151](https://github.com/chrisleekr/binance-trading-bot/issues/151)
-- [ ] Improve notifications by supporting Apprise - [#106](https://github.com/chrisleekr/binance-trading-bot/issues/106)
-- [ ] Support cool time after hitting the lowest price before buy - [#105](https://github.com/chrisleekr/binance-trading-bot/issues/105)
-- [ ] Reset global configuration to initial configuration - [#97](https://github.com/chrisleekr/binance-trading-bot/issues/97)
-- [ ] Support multilingual frontend - [#56](https://github.com/chrisleekr/binance-trading-bot/issues/56)
-- [ ] Non linear stop price and chase function - [#246](https://github.com/chrisleekr/binance-trading-bot/issues/246)
-- [ ] Support STOP-LOSS configuration per grid trade for selling - [#261](https://github.com/chrisleekr/binance-trading-bot/issues/261)
-
 ## Donations
 
-If you find this project helpful, feel free to make a small
-[donation](https://github.com/chrisleekr/binance-trading-bot/blob/master/DONATIONS.md)
-to the developer.
+如果你觉得这个项目对你有帮助，欢迎你给开发者一个小小的[捐赠](https://github.com/chrisleekr/binance-trading-bot/blob/master/DONATIONS.md)
 
-## Acknowledgments
+## 免责声明
 
-- [@d0x2f](https://github.com/d0x2f)
-- And many others! Thanks guys!
+我对本项目所包含的信息和材料的准确性或完整性不作任何保证，也不承担任何责任或义务。在任何情况下，对于因您使用或无法使用本代码或与之链接的任何代码，或因您依赖本代码上的信息和材料而直接或间接导致的任何索赔、损害、损失、费用、成本或责任（包括但不限于任何利润损失、业务中断或信息损失的直接或间接损害），我不承担任何责任或义务，即使我已事先被告知此类损害的可能性。
 
-## Contributors
-
-Thanks to all contributors :heart: [Click to see our heroes](https://github.com/chrisleekr/binance-trading-bot/graphs/contributors)
-
-## Disclaimer
-
-I give no warranty and accepts no responsibility or liability for the accuracy or the completeness of the information and materials contained in this project. Under no circumstances will I be held responsible or liable in any way for any claims, damages, losses, expenses, costs or liabilities whatsoever (including, without limitation, any direct or indirect damages for loss of profits, business interruption or loss of information) resulting from or arising directly or indirectly from your use of or inability to use this code or any code linked to it, or from your reliance on the information and material on this code, even if I have been advised of the possibility of such damages in advance.
-
-**So use it at your own risk!**
+**所以请自行承担所有风险!**
